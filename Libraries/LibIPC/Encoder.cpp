@@ -23,6 +23,7 @@
 #include <LibIPC/File.h>
 #include <LibURL/Origin.h>
 #include <LibURL/URL.h>
+#include <LibWeb/Fetch/Infrastructure/AuthenticationEntry.h>
 
 namespace IPC {
 
@@ -209,6 +210,14 @@ ErrorOr<void> encode(Encoder& encoder, Core::AnonymousBuffer const& buffer)
         TRY(encoder.encode(TRY(IPC::File::clone_fd(buffer.fd()))));
     }
 
+    return {};
+}
+
+template<>
+ErrorOr<void> encode(Encoder& encoder, Web::Fetch::Infrastructure::AuthenticationEntry const& authentication_entry)
+{
+    TRY(encoder.encode(authentication_entry.username));
+    TRY(encoder.encode(authentication_entry.password));
     return {};
 }
 

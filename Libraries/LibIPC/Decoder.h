@@ -27,6 +27,7 @@
 #include <LibIPC/Forward.h>
 #include <LibURL/Origin.h>
 #include <LibURL/URL.h>
+#include <LibWeb/Forward.h>
 
 namespace IPC {
 
@@ -148,6 +149,9 @@ ErrorOr<Core::AnonymousBuffer> decode(Decoder&);
 
 template<>
 ErrorOr<URL::BlobURLEntry> decode(Decoder&);
+
+template<>
+ErrorOr<Web::Fetch::Infrastructure::AuthenticationEntry> decode(Decoder&);
 
 template<Concepts::Array T>
 ErrorOr<T> decode(Decoder& decoder)

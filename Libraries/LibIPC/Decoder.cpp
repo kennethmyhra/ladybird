@@ -17,6 +17,7 @@
 #include <LibIPC/File.h>
 #include <LibURL/Parser.h>
 #include <LibURL/URL.h>
+#include <LibWeb/Fetch/Infrastructure/AuthenticationEntry.h>
 
 namespace IPC {
 
@@ -193,6 +194,15 @@ ErrorOr<Core::AnonymousBuffer> decode(Decoder& decoder)
     auto anon_file = TRY(decoder.decode<IPC::File>());
 
     return Core::AnonymousBuffer::create_from_anon_fd(anon_file.take_fd(), size);
+}
+
+template<>
+ErrorOr<Web::Fetch::Infrastructure::AuthenticationEntry> decode(Decoder& decoder)
+{
+    return Web::Fetch::Infrastructure::AuthenticationEntry {
+        .username = TRY(decoder.decode<String>()),
+        .password = TRY(decoder.decode<String>()),
+    };
 }
 
 }
