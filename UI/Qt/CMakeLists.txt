@@ -36,6 +36,7 @@ target_sources(ladybird PRIVATE
     InputMethodUtils.cpp
     JavaScriptDialog.cpp
     LocationEdit.cpp
+    LoginDialog.cpp
     Menu.cpp
     NativeWindowContainer.cpp
     SelectDropdown.cpp

@@ -9,6 +9,7 @@
 #include <LibCore/EventLoop.h>
 #include <LibURL/URL.h>
 #include <LibWakeLock/DisplaySleepInhibitor.h>
+#include <LibWeb/Fetch/Infrastructure/AuthenticationEntry.h>
 #include <LibWeb/HTML/SelectedFile.h>
 #include <LibWebView/Application.h>
 #include <LibWebView/DownloadPresentation.h>
@@ -24,6 +25,7 @@
 #if defined(AK_OS_MACOS)
 #    include <UI/Qt/MacWindow.h>
 #endif
+#include <UI/Qt/LoginDialog.h>
 #include <UI/Qt/Menu.h>
 #include <UI/Qt/StringUtils.h>
 #include <UI/Qt/WindowControlButton.h>
@@ -958,6 +960,22 @@ Tab::Tab(BrowserWindow* window, RefPtr<WebView::WebContentClient> parent_client,
 
     view().on_request_dismiss_dialog = [this]() {
         m_javascript_dialog->dismiss();
+    };
+
+    view().on_request_sign_in_dialog = [this]() {
+        auto* dialog = new LoginDialog(view().window());
+
+        QObject::connect(dialog, &QDialog::finished, this, [this, dialog = QPointer<LoginDialog> { dialog }](auto result) {
+            Optional<Web::Fetch::Infrastructure::AuthenticationEntry> authentication_entry {};
+            if (result == QDialog::Accepted) {
+                authentication_entry = Web::Fetch::Infrastructure::AuthenticationEntry { .username = dialog->username(), .password = dialog->password() };
+            }
+            view().sign_in_closed(authentication_entry);
+
+            dialog->close();
+        });
+
+        dialog->open();
     };
 
     view().on_request_color_picker = [this](Color current_color) {
