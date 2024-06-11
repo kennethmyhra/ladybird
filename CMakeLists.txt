@@ -84,3 +84,7 @@ add_custom_target(check-style
         COMMAND "${ladybird_SOURCE_DIR}/Meta/check-style.sh"
         USES_TERMINAL
 )
+
+if (ENABLE_ALL_DEBUG_FACILITIES)
+    set(ENABLE_ALL_THE_DEBUG_MACROS ON)
+endif()
