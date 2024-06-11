@@ -16,6 +16,10 @@ on:
           required: false
           type: string
           default: 'NO_FUZZ'
+        debug_options:
+          required: false
+          type: string
+          default: 'NORMAL_DEBUG'
 
 env:
   # runner.workspace = /home/runner/work/serenity
@@ -24,6 +28,7 @@ env:
   CCACHE_DIR: ${{ github.workspace }}/.ccache
   VCPKG_ROOT:  ${{ github.workspace }}/Toolchain/Tarballs/vcpkg
   VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
+  ALL_DEBUG: ON
 
 jobs:
   CI:
@@ -56,7 +61,7 @@ jobs:
           os: ${{ inputs.os_name }}
           arch: 'Lagom'
           toolchain: ${{ inputs.toolchain }}
-          cache_key_extra: ${{ inputs.fuzzer }}
+          cache_key_extra: ${{ inputs.fuzzer }}-DEBUG_OPTION-${{ inputs.debug_options }}
           serenity_ccache_path: ${{ env.CCACHE_DIR }}
           download_cache_path: ${{ github.workspace }}/Build/caches
 
@@ -82,12 +87,23 @@ jobs:
         run: sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR IGNORE INTO access VALUES ('kTCCServiceMicrophone','/usr/local/opt/runner/provisioner/provisioner',1,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1687786159,NULL,NULL,'UNUSED',1687786159);"
 
       - name: Create Build Environment
-        if: ${{ inputs.fuzzer == 'NO_FUZZ' }}
+        if: ${{ inputs.fuzzer == 'NO_FUZZ' && inputs.debug_options == 'NORMAL_DEBUG' }}
         working-directory: ${{ github.workspace }}
         run: |
           cmake --preset Sanitizer_CI -B Build \
             -DINCLUDE_WASM_SPEC_TESTS=ON \
             -DWASM_SPEC_TEST_SKIP_FORMATTING=ON \
+            -DCMAKE_C_COMPILER=${{ steps.build-parameters.outputs.host_cc }} \
+            -DCMAKE_CXX_COMPILER=${{ steps.build-parameters.outputs.host_cxx }}
+
+      - name: Create Build Environment
+        if: ${{ inputs.fuzzer == 'NO_FUZZ' && inputs.debug_options == 'ALL_DEBUG' }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          cmake --preset Sanitizer_CI -B Build \
+            -DINCLUDE_WASM_SPEC_TESTS=ON \
+            -DWASM_SPEC_TEST_SKIP_FORMATTING=ON \
+            -DENABLE_ALL_DEBUG_FACILITIES=ON \
             -DCMAKE_C_COMPILER=${{ steps.build-parameters.outputs.host_cc }} \
             -DCMAKE_CXX_COMPILER=${{ steps.build-parameters.outputs.host_cxx }}
 

@@ -15,16 +15,19 @@ jobs:
         os_name: ['Linux']
         os: [ubuntu-22.04]
         fuzzer: ['NO_FUZZ', 'FUZZ']
+        debug_options: ['NORMAL_DEBUG']
         toolchain: ['Clang']
         include:
           - os_name: 'macOS'
             os: macos-14
             fuzzer: 'NO_FUZZ'
             toolchain: 'Clang'
+            debug_options: 'ALL_DEBUG'
           - os_name: 'Linux'
             os: ubuntu-22.04
             fuzzer: 'NO_FUZZ'
             toolchain: 'GNU'
+            debug_options: 'ALL_DEBUG'
 
     uses: ./.github/workflows/lagom-template.yml
     with:
