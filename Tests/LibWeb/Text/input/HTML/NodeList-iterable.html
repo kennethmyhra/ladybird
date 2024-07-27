@@ -1,0 +1,45 @@
+<script src="../include.js"></script>
+<script>
+    test(() => {
+        const node = document.createElement("div");
+        const kid1 = document.createElement("p");
+        const kid2 = document.createTextNode("hey");
+        const kid3 = document.createElement("span");
+
+        node.appendChild(kid1);
+        node.appendChild(kid2);
+        node.appendChild(kid3);
+
+        let list = node.childNodes;
+
+        println("Iterate keys in a for loop");
+        for (const key of list.keys())
+            println(key);
+
+        println("\nIterate values in a for loop");
+        for (const value of list.values())
+            println(value);
+
+        println("\nIterate entries in a for loop");
+        for (const pair of list.entries())
+            println(`${pair[0]}, ${pair[1]}`);
+
+        println("\nIterate values by explicitly calling IterableIterator.next()");
+        const iterator = list.values();
+        for (; ;) {
+            let result = iterator.next();
+            if (result.done)
+                break;
+
+            const value = result.value;
+            if (value instanceof Text)
+                println(value);
+        }
+
+        println("\nIterate values by calling list.forEach()");
+        list.forEach((value, index, _) => {
+            println(`${index}, ${value}`);
+        });
+
+    });
+</script>

@@ -1,0 +1,22 @@
+Iterate keys in a for loop
+0
+1
+2
+
+Iterate values in a for loop
+[object HTMLParagraphElement]
+[object Text]
+[object HTMLSpanElement]
+
+Iterate entries in a for loop
+0, [object HTMLParagraphElement]
+1, [object Text]
+2, [object HTMLSpanElement]
+
+Iterate values by explicitly calling IterableIterator.next()
+[object Text]
+
+Iterate values by calling list.forEach()
+0, [object HTMLParagraphElement]
+1, [object Text]
+2, [object HTMLSpanElement]
