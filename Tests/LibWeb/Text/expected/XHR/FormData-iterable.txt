@@ -1,0 +1,24 @@
+Iterate keys in a for loop
+key1
+key2
+key2
+
+Iterate values in a for loop
+value1
+value2
+[object File]
+
+Iterate entries in a for loop
+key1, value1
+key2, value2
+key2, [object File]
+
+Iterate values by explicitly calling IterableIterator.next()
+value1
+value2
+[object File]
+
+Iterate values by calling .forEach()
+value1, key1
+value2, key2
+[object File], key2

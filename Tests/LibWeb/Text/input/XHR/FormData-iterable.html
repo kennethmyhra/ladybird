@@ -1,0 +1,38 @@
+<script src="../include.js"></script>
+<script>
+    test(() => {
+        const formData = new FormData();
+        formData.append("key1", "value1");
+        formData.append("key2", "value2");
+        formData.append("key2", new File([], "file_name.txt"));
+
+        println("Iterate keys in a for loop");
+        for (const key of formData.keys())
+            println(key);
+
+        println("\nIterate values in a for loop");
+        for (const value of formData.values())
+            println(value);
+
+        println("\nIterate entries in a for loop");
+        for (const pair of formData.entries())
+            println(`${pair[0]}, ${pair[1]}`);
+
+        println("\nIterate values by explicitly calling IterableIterator.next()");
+        const iterator = formData.values();
+        for (; ;) {
+            let result = iterator.next();
+            if (result.done)
+                break;
+
+            const value = result.value;
+            println(value);
+        }
+
+        println("\nIterate values by calling .forEach()");
+        formData.forEach((value, key, _) => {
+            println(`${value}, ${key}`);
+        });
+
+    });
+</script>
