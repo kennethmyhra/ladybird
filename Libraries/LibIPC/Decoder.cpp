@@ -17,6 +17,7 @@
 #include <LibIPC/File.h>
 #include <LibURL/Parser.h>
 #include <LibURL/URL.h>
+#include <LibWeb/Fetch/Infrastructure/AuthenticationEntry.h>
 
 namespace IPC {
 
@@ -188,6 +189,15 @@ template<>
 ErrorOr<URL::BlobURLEntry::MediaSource> decode<URL::BlobURLEntry::MediaSource>(Decoder&)
 {
     return URL::BlobURLEntry::MediaSource {};
+}
+
+template<>
+ErrorOr<Web::Fetch::Infrastructure::AuthenticationEntry> decode(Decoder& decoder)
+{
+    return Web::Fetch::Infrastructure::AuthenticationEntry {
+        .username = TRY(decoder.decode<String>()),
+        .password = TRY(decoder.decode<String>())
+    };
 }
 
 }
