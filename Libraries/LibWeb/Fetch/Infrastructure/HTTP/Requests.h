@@ -22,6 +22,7 @@
 #include <LibURL/Origin.h>
 #include <LibURL/URL.h>
 #include <LibWeb/Export.h>
+#include <LibWeb/Fetch/Infrastructure/AuthenticationEntry.h>
 #include <LibWeb/Fetch/Infrastructure/HTTP.h>
 #include <LibWeb/Fetch/Infrastructure/HTTP/Bodies.h>
 
@@ -327,6 +328,15 @@ public:
     void remove_pending_response(Badge<Fetching::PendingResponse>, GC::Ref<Fetching::PendingResponse> pending_response)
     {
         m_pending_responses.remove_first_matching([&](auto gc_ptr) { return gc_ptr == pending_response; });
+    }
+
+    [[nodiscard]] Optional<AuthenticationEntry> get_authentication_entry()
+    {
+        auto const& url = current_url();
+        auto const url_key = MUST(String::formatted("{}://{}:{}", url.scheme(), url.serialized_host(), url.port_or_default()));
+        if (auto entry = s_authentication_entries.get(url_key); entry.has_value())
+            return entry.value();
+        return {};
     }
 
 private:
