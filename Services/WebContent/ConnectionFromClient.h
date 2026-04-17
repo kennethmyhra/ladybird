@@ -230,6 +230,7 @@ private:
     virtual void color_picker_update(Web::PageId page_id, Optional<Color> picked_color, Web::HTML::ColorPickerUpdateState state) override;
     virtual void file_picker_closed(Web::PageId page_id, Vector<Web::HTML::SelectedFile> selected_files) override;
     virtual void select_dropdown_closed(Web::PageId page_id, Optional<u32> selected_item_id) override;
+    virtual void sign_in_closed(Web::PageId page_id, Optional<Web::Fetch::Infrastructure::AuthenticationEntry> response) override;
 
     virtual void retrieved_clipboard_entries(Web::PageId page_id, u64 request_id, Vector<Web::Clipboard::SystemClipboardItem>) override;
 

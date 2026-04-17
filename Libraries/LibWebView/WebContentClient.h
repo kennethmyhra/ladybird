@@ -265,6 +265,7 @@ private:
     virtual void did_request_accept_dialog(Web::PageId page_id) override;
     virtual void did_request_dismiss_dialog(Web::PageId page_id) override;
     virtual void did_request_document_cookie_version_index(Web::PageId page_id, i64 document_id, String domain) override;
+    virtual void did_request_sign_in_dialog(Web::PageId page_id) override;
     virtual Messages::WebContentClient::DidRequestAllCookiesWebdriverResponse did_request_all_cookies_webdriver(URL::URL) override;
     virtual Messages::WebContentClient::DidRequestAllCookiesCookiestoreResponse did_request_all_cookies_cookiestore(URL::URL) override;
     virtual Messages::WebContentClient::DidRequestNamedCookieResponse did_request_named_cookie(URL::URL, String) override;

@@ -1883,6 +1883,14 @@ void WebContentClient::did_request_dismiss_dialog(Web::PageId page_id)
     }
 }
 
+void WebContentClient::did_request_sign_in_dialog(Web::PageId page_id)
+{
+    if (auto view = view_for_page_id(page_id); view.has_value()) {
+        if (view->on_request_sign_in_dialog)
+            view->on_request_sign_in_dialog();
+    }
+}
+
 void WebContentClient::did_change_favicon(Web::PageId page_id, Gfx::ShareableBitmap favicon)
 {
     if (!favicon.is_valid()) {

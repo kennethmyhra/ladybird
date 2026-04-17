@@ -115,6 +115,7 @@ endpoint WebContentClient
     did_request_accept_dialog(Web::PageId page_id) =|
     did_request_dismiss_dialog(Web::PageId page_id) =|
     did_get_source(Web::PageId page_id, URL::URL url, URL::URL base_url, Utf16String source) =|
+    did_request_sign_in_dialog(Web::PageId page_id) =|
 
     did_inspect_dom_tree(Web::PageId page_id, String dom_tree) =|
     did_inspect_storage(Web::PageId page_id, u64 request_id, String storage_items) =|

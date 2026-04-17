@@ -2681,6 +2681,12 @@ void ConnectionFromClient::prompt_closed(Web::PageId page_id, Optional<Utf16Stri
         page->page().prompt_closed(move(response));
 }
 
+void ConnectionFromClient::sign_in_closed(Web::PageId page_id, Optional<Web::Fetch::Infrastructure::AuthenticationEntry> response)
+{
+    if (auto page = this->page(page_id); page.has_value())
+        page->page().sign_in_closed(move(response));
+}
+
 void ConnectionFromClient::color_picker_update(Web::PageId page_id, Optional<Color> picked_color, Web::HTML::ColorPickerUpdateState state)
 {
     if (auto page = this->page(page_id); page.has_value())

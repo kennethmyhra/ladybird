@@ -15,6 +15,7 @@
 #include <LibWeb/CSS/StyleSheetIdentifier.h>
 #include <LibWeb/HTML/AudioPlayState.h>
 #include <LibWeb/HTML/AutoplayPolicy.h>
+#include <LibWeb/Fetch/Infrastructure/AuthenticationEntry.h>
 #include <LibWeb/HTML/ColorPickerUpdateState.h>
 #include <LibWeb/HTML/BroadcastChannelMessage.h>
 #include <LibWeb/HTML/ApplyHistoryStep.h>
@@ -223,6 +224,7 @@ endpoint WebContentServer
     color_picker_update(Web::PageId page_id, Optional<Color> picked_color, Web::HTML::ColorPickerUpdateState state) =|
     file_picker_closed(Web::PageId page_id, Vector<Web::HTML::SelectedFile> selected_files) =|
     select_dropdown_closed(Web::PageId page_id, Optional<u32> selected_item_id) =|
+    sign_in_closed(Web::PageId page_id, Optional<Web::Fetch::Infrastructure::AuthenticationEntry> authentication_entry) =|
 
     retrieved_clipboard_entries(Web::PageId page_id, u64 request_id, Vector<Web::Clipboard::SystemClipboardItem> items) =|
 
