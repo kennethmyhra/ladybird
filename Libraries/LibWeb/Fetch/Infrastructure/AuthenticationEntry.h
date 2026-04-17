@@ -7,6 +7,7 @@
 #pragma once
 
 #include <AK/String.h>
+#include <LibURL/Forward.h>
 
 namespace Web::Fetch::Infrastructure {
 
@@ -15,5 +16,8 @@ struct AuthenticationEntry {
     String password {};
     String realm {};
 };
+
+void set_authentication_entry(URL::URL const&, AuthenticationEntry);
+Optional<AuthenticationEntry> get_authentication_entry(URL::URL const&);
 
 }
