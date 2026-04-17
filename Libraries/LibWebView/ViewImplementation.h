@@ -295,6 +295,7 @@ public:
     void alert_closed();
     void confirm_closed(bool accepted);
     void prompt_closed(Optional<Utf16String> const& response);
+    void sign_in_closed(Optional<Web::Fetch::Infrastructure::AuthenticationEntry> const&);
     void color_picker_update(Optional<Color> picked_color, Web::HTML::ColorPickerUpdateState state);
     void file_picker_closed(Vector<Web::HTML::SelectedFile> selected_files);
     void select_dropdown_closed(Optional<u32> const& selected_item_id);
@@ -418,6 +419,7 @@ public:
     Function<void(URL::URL const&, URL::Origin const&, ExternalURLHandler const&, Function<void(bool)>)> on_request_external_url_confirmation;
     Function<void()> on_request_accept_dialog;
     Function<void()> on_request_dismiss_dialog;
+    Function<void()> on_request_sign_in_dialog;
     Function<void(JsonObject)> on_received_dom_tree;
     Function<void(DOMNodeProperties)> on_received_dom_node_properties;
     HashMap<u64, Function<void(ErrorOr<Vector<DevTools::DevToolsDelegate::StorageItem>>)>> on_received_storage_items;

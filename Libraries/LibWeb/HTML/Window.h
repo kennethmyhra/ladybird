@@ -216,6 +216,7 @@ public:
     void alert(Utf16String const& message = {});
     bool confirm(Optional<Utf16String> const& message);
     Optional<Utf16String> prompt(Optional<Utf16String> const& message, Optional<Utf16String> const& default_);
+    Optional<Fetch::Infrastructure::AuthenticationEntry> sign_in_dialog();
 
     WebIDL::ExceptionOr<void> post_message(JS::Realm&, JS::Value message, Utf16String const&, GC::RootVector<GC::Ref<JS::Object>> const&);
     struct PostMessageOptions {

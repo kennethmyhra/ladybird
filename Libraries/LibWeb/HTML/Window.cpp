@@ -1458,6 +1458,11 @@ Optional<Utf16String> Window::prompt(Optional<Utf16String> const& message, Optio
     return result;
 }
 
+Optional<Fetch::Infrastructure::AuthenticationEntry> Window::sign_in_dialog()
+{
+    return page().did_request_sign_in_dialog();
+}
+
 WebIDL::ExceptionOr<Window::PreparedPostMessage> Window::prepare_post_message(JS::Realm& realm, JS::Value message, PostMessageOptions const& options)
 {
     // 2. Let incumbentSettings be the incumbent settings object.
